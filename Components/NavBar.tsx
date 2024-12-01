@@ -9,6 +9,7 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
+  Button,
 } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,7 +53,7 @@ function NavBar() {
     return null;
   }
 
-  return (
+  return (<> 
     <Navbar
       shouldHideOnScroll
       isMenuOpen={isMenuOpen}
@@ -137,7 +138,13 @@ function NavBar() {
         ))}
       </NavbarMenu>
     </Navbar>
-  );
+
+    <Button color="primary">
+       Button from nextui
+    </Button>
+
+
+    </>);
 }
 
 export default NavBar;
