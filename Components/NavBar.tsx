@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiMoon } from "react-icons/fi";
 import { FiSun } from "react-icons/fi";
 import {
@@ -17,7 +17,10 @@ import logoLight from "../Assets/logo.png";
 import logoDark from "../Assets/logoDark.png";
 
 function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
+  const [toggleTheme, setToggleTheme] = useState(false);
 
   const menuItems = [
     { name: "Skills", href: "#skills" },
@@ -26,19 +29,16 @@ function NavBar() {
     { name: "Contact", href: "#contact" },
   ];
 
-  const [toggleTheme, setToggleTheme] = useState<boolean>(false);
-
-  const { setTheme, resolvedTheme } = useTheme();
-
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   function handleDark() {
     setToggleTheme(!toggleTheme);
 
     if (resolvedTheme === "dark") {
       setTheme("light");
-    }
-
-    if (resolvedTheme === "light") {
+    } else {
       setTheme("dark");
     }
   }
@@ -47,6 +47,10 @@ function NavBar() {
     setIsMenuOpen(false);
   }
 
+  // Prevent hydration mismatch
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Navbar
