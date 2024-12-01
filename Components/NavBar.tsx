@@ -62,7 +62,7 @@ function NavBar() {
     >
       <NavbarContent className="flex gap-[12vh] sm:justify-between lg:gap-[8vh] md:gap-[4vh]">
         <NavbarItem className="font-title w-5">
-          {/* <Link color="foreground" href="/" onClick={handleClose}>
+          <Link color="foreground" href="/" onClick={handleClose}>
             <Image
               src={logoLight.src}
               alt=""
@@ -77,7 +77,7 @@ function NavBar() {
               width={100}
               height={100}
             />
-          </Link> */}
+          </Link>
         </NavbarItem>
 
         {menuItems.map((item, index) => (

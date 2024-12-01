@@ -4,20 +4,18 @@ import { nextui } from '@nextui-org/react';
 const config: Config = {
   darkMode: 'class',
   content: [
-    // Add paths for your pages and components to scan for Tailwind classes
-    './pages/**/*.{js,ts,jsx,tsx,mdx}', 
-    './components/**/*.{js,ts,jsx,tsx,mdx}', 
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    // Ensure Tailwind CSS is scanning the NextUI theme classes if necessary
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', 
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       screens: {
-        xl: { max: '1279px' }, // Max width of 1279px for xl
-        lg: { max: '1025px' }, // Max width of 1025px for lg
-        md: { max: '626px' }, // Max width of 626px for md
-        sm: { max: '530px' }, // Max width of 530px for sm
+        xl: { max: '1279px' },
+        lg: { max: '1025px' },
+        md: { max: '626px' },
+        sm: { max: '530px' },
       },
       colors: {
         background: 'var(--background)',
@@ -40,7 +38,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [nextui()],
+  plugins: [
+    nextui(),
+  ],
 };
 
 export default config;
