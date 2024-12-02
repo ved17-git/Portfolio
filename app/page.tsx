@@ -1,3 +1,4 @@
+import Start from "@/Components/Start";
 import Navbar from "../Components/NavBar";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     
 
     <Navbar/>
+    <Start/>
 
     
     </> );

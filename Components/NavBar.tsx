@@ -8,7 +8,7 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-
+  Button,
 } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,7 +28,6 @@ function NavBar() {
     { name: "Contact", href: "#contact" },
   ];
 
-  // Ensure theme is loaded to avoid hydration mismatches
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -37,7 +36,9 @@ function NavBar() {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  // Early return to avoid hydration errors
+  const handleClose = () => setIsMenuOpen(false);
+
+  // Prevent hydration mismatch
   if (!isMounted) return null;
 
   return (
@@ -46,66 +47,73 @@ function NavBar() {
         shouldHideOnScroll
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
-        className="mx-auto rounded-lg sm:w-[95%] px-4 my-3 shadow-md border border-zinc-400 bg-white dark:bg-black dark:shadow-zinc-800 dark:border-none"
+        className="w-fit mx-auto rounded-lg sm:w-[95%] px-[6vh] sm:px-[1vh] my-3 shadow-md border-[1px] bg-white border-zinc-400 dark:bg-black dark:shadow-zinc-800 dark:border-none"
         id="navbar"
         aria-label="Main navigation"
       >
-        <NavbarContent className="flex items-center justify-between">
-          {/* Logo Section */}
-          <NavbarItem className="font-title">
-            <Link href="/" onClick={() => setIsMenuOpen(false)}>
+        <NavbarContent className="flex gap-[12vh] sm:justify-between lg:gap-[8vh] md:gap-[4vh]">
+          <NavbarItem className="font-title w-5">
+            <Link href="/" onClick={handleClose} aria-label="Home">
               <Image
-                src={resolvedTheme === "dark" ? logoDark : logoLight}
-                alt="Logo"
+                src={logoLight.src}
+                alt="Logo Light"
+                className="w-full dark:hidden"
                 width={100}
-                height={40}
-                priority
+                height={100}
+              />
+              <Image
+                src={logoDark.src}
+                alt="Logo Dark"
+                className="w-full hidden dark:block"
+                width={100}
+                height={100}
               />
             </Link>
           </NavbarItem>
 
-          {/* Menu Links */}
-          <div className="hidden sm:flex gap-6">
-            {menuItems.map((item, index) => (
-              <NavbarItem key={index} className="font-title">
-                <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
-                  {item.name}
-                </Link>
-              </NavbarItem>
-            ))}
-          </div>
+          {menuItems.map((item, index) => (
+            <NavbarItem key={index} className="sm:hidden font-title">
+              <Link href={item.href} aria-label={`Go to ${item.name}`} onClick={handleClose}>
+                {item.name}
+              </Link>
+            </NavbarItem>
+          ))}
 
-          {/* Theme Toggle + Menu */}
-          <NavbarContent justify="end" className="flex items-center gap-4">
-            <button
-              onClick={handleDark}
-              aria-label="Toggle Theme"
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded-lg"
-            >
-              {resolvedTheme === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
-            </button>
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <button
+                onClick={handleDark}
+                aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+                className="w-fit hover:bg-[#F4F4F5] p-2 rounded-xl dark:hover:bg-[#27272A] transition-transform duration-300 ease-in-out"
+              >
+                {resolvedTheme === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
+              </button>
+            </NavbarItem>
 
             <NavbarMenuToggle
-              aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-              className="sm:hidden"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              className="hidden sm:block"
             />
           </NavbarContent>
         </NavbarContent>
 
-        {/* Mobile Menu */}
-        <NavbarMenu className="sm:hidden bg-white dark:bg-black">
+        <NavbarMenu className="bg-white dark:bg-black">
           {menuItems.map((item, index) => (
-            <NavbarMenuItem
-              key={index}
-              className="px-4 py-2 text-lg font-title border-b dark:border-gray-700"
-            >
-              <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
+            <NavbarMenuItem key={index} className="pl-[0.5vh] mt-7 text-2xl font-title border-b-1 pb-1">
+              <Link
+                href={item.href}
+                onClick={handleClose}
+                aria-label={`Go to ${item.name}`}
+                className="w-full"
+              >
                 {item.name}
               </Link>
             </NavbarMenuItem>
           ))}
         </NavbarMenu>
       </Navbar>
+
+
     </>
   );
 }
